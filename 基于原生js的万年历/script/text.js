@@ -46,11 +46,11 @@ var sFtv = new Array(
 		"0322 世界水日",
 		"0323 世界气象日",
 		"0324 世界防治结核病日",
-		
+
 		"0401 愚人节",
 		"0407 世界卫生日",
 		"0422 世界地球日",
-		
+
 		"0501*劳动节",
 		"0504 青年节",
 		"0505 碘缺乏病防治日",
@@ -62,7 +62,7 @@ var sFtv = new Array(
 		"0520 全国学生营养日",
 		"0523 国际牛奶日",
 		"0531 世界无烟日",
-		
+
 		"0601 儿童节",
 		"0605 世界环境日",
 		"0606 全国爱眼日",
@@ -70,14 +70,14 @@ var sFtv = new Array(
 		"0623 国际奥林匹克日",
 		"0625 全国土地日",
 		"0626 国际反毒品日",
-		
+
 		"0701 建党节 香港回归纪念 国际建筑日",
 		"0707 中国人民抗日战争纪念日",
 		"0711 世界人口日",
-	
+
 		"0801 建军节",
 		"0808 父亲节",
-		
+
 		"0908 国际扫盲日",
 		"0909 毛泽东逝世纪念",
 		"0910 教师节",
@@ -86,7 +86,7 @@ var sFtv = new Array(
 		"0920 国际爱牙日",
 		"0927 世界旅游日",
 		"0928 孔子诞辰",
-		
+
 		"1001*国庆节 国际音乐日",
 		"1004 世界动物日",
 		"1006 老人节",
@@ -96,7 +96,7 @@ var sFtv = new Array(
 		"1016 世界粮食日",
 		"1017 世界消除贫困日",
 		"1024 联合国日",
-		
+
 		"1108 中国记者日",
 		"1109 消防宣传日",
 		"1112 孙中山诞辰纪念",
@@ -159,13 +159,13 @@ function monthDays(y,m) {
 }
 // 传入公历日期 计算返回农历日期
 function Lunar(objDate) {
-   var m = ""; 
+   var m = "";
    var i, leap=0, temp=0;
    var baseDate = new Date(1900,0,31); //定义基准时间为1900年1月31日
    var offset   = Math.floor((objDate.getTime() + 2206425600000)/86400000);
    m += "objDate="+objDate.getTime()+", new Date(1900,0,31)="+baseDate.getTime();
    m += "offset="+offset;
-   
+
    this.dayCyl = offset + 40;
    this.monCyl = 14;
 
@@ -174,7 +174,7 @@ function Lunar(objDate) {
       offset -= temp;
       this.monCyl += 12;
    }
-   
+
    if(offset<0) {
       offset += temp;
       i--;
@@ -209,7 +209,7 @@ function Lunar(objDate) {
 
    this.month = i;
    this.day = offset + 1;
-   
+
    m += "\noffset="+offset+", year="+this.year+", yearCyl="+this.yearCyl+", month="+this.month+",\n monthCyl="+this.monthCyl+", day="+this.day+", dayCyl="+this.dayCyl;
 }
 //判断公历是否为闰年 返回m+1这个月的天数
@@ -257,14 +257,14 @@ function calendar(y,m) {
 	var lDPOS = new Array(3);
 	var n = 0;
 	var firstLM = 0;
-     
+
 	sDObj = new Date(y,m,1);
-	     
+
 	this.length    = solarDays(y,m);
      	this.firstWeek = sDObj.getDay();
 
 	for(var i=0;i<this.length;i++) {
-	  
+
 		if(lD>lX) {
 			sDObj = new Date(y,m,i+1);
 			lDObj = new Lunar(sDObj);
@@ -273,16 +273,16 @@ function calendar(y,m) {
 			lD    = lDObj.day;
 			lL    = lDObj.isLeap;
 			lX    = lL? leapDays(lY): monthDays(lY,lM);
-	       
+
 			if(n==0) firstLM = lM;
 			lDPOS[n++] = i-lD+1;
 	  	}
-	  
+
 		this[i] = new calElement(y, m+1, i+1, nStr1[(i+this.firstWeek)%7],
                                lY, lM, lD++, lL,
                                cyclical(lDObj.yearCyl) ,cyclical(lDObj.monCyl), cyclical(lDObj.dayCyl++) );
 
-	  
+
 		if((i+this.firstWeek)%7==0)   this[i].color = '#ff5f07';
 		if((i+this.firstWeek)%14==13) this[i].color = '#ff5f07';
      	}
@@ -292,14 +292,14 @@ function calendar(y,m) {
 	this[tmp1].solarTerms = solarTerm[m*2];
      	this[tmp2].solarTerms = solarTerm[m*2+1];
 	if(m==3) this[tmp1].color = '#ff5f07';
-        
+
 	for(i in sFtv)
 		if(sFtv[i].match(/^(\d{2})(\d{2})([\s\*])(.+)$/))
 			if(Number(RegExp.$1)==(m+1)) {
 				this[Number(RegExp.$2)-1].solarFestival += RegExp.$4 + ' ';
 				if(RegExp.$3=='*') this[Number(RegExp.$2)-1].color = '#ff5f07';
 	       		}
-     
+
 	for(i in wFtv)
 		if(wFtv[i].match(/^(\d{2})(\d)(\d)([\s\*])(.+)$/))
 			if(Number(RegExp.$1)==(m+1)) {
@@ -307,8 +307,8 @@ function calendar(y,m) {
 				tmp2=Number(RegExp.$3);
 				this[((this.firstWeek>tmp2)?7:0) + 7*(tmp1-1) + tmp2 - this.firstWeek].solarFestival += RegExp.$5 + ' ';
 	       		}
-     
-	for(i in lFtv)  
+
+	for(i in lFtv)
 		if(lFtv[i].match(/^(\d{2})(.{2})([\s\*])(.+)$/)) {
 			tmp1=Number(RegExp.$1)-firstLM;
 			if(tmp1==-11) tmp1=1;
@@ -320,10 +320,10 @@ function calendar(y,m) {
 				}
 			}
 	  	}
-     
+
 	if((this.firstWeek+12)%7==5)
 		this[12].solarFestival += '黑色星期五 ';
-     
+
 	if(y==tY && m==tM) {
 		this[tD-1].isToday = true;
 	}
@@ -333,10 +333,10 @@ function cDay(d){
 	var s;
 	switch (d) {
 		case 10:
-			s = '初十'; 
+			s = '初十';
 			break;
 		case 20:
-			s = '二十'; 
+			s = '二十';
 			break;
 		case 30:
 			s = '三十';
@@ -368,43 +368,41 @@ var cnt = 0;
 var dStyle;
 document.onmousemove = mEvn;
 
-//把内容渲染到表格上 
+//把内容渲染到表格上
 var cld;
 
 function drawCld(SY,SM) {
-     
+
 	var i,sD,s,size;
 	cld = new calendar(SY,SM);
-     
-	document.getElementById("gz").innerHTML = '&nbsp;&nbsp;农历' 
-		+ cyclical(SY-1900+36) + '年 &nbsp;&nbsp;【'+Animals[(SY-4)%12]+'】';
-        
+
+	document.getElementById("gz").innerHTML = '&nbsp;&nbsp;农历' + cyclical(SY-1900+36) + '年 &nbsp;&nbsp;【'+Animals[(SY-4)%12]+'】';
+
 	for(i=0;i<42;i++) {
-	  
+
 		sObj = document.getElementById('sd'+ i);
 		lObj = document.getElementById('ld'+ i);
-	  
+
 		sObj.style.background = '';
-	  	lObj.style.background = '';
-	  
+	  lObj.style.background = '';
+
 		sD = i - cld.firstWeek;
-	  
-		if(sD>-1 && sD<cld.length) {	       
+
+		if(sD>-1 && sD<cld.length) {
 			sObj.innerHTML = sD+1;
 			if(cld[sD].isToday){
 				//设置今天的背景色
 				sObj.style.background = '#FFD700';
 			}
-	       
+
 			sObj.style.color = cld[sD].color;
-	       
-			if(cld[sD].lDay==1)
-				lObj.innerHTML = '<b>'+(cld[sD].isLeap?'闰':'') 
-					+ cld[sD].lMonth + '月' 
-					+ (monthDays(cld[sD].lYear,cld[sD].lMonth)==29?'小':'大')+'</b>';
-			else
+
+			if(cld[sD].lDay==1){
+				lObj.innerHTML = '<b>'+(cld[sD].isLeap?'闰':'') + cld[sD].lMonth + '月' + (monthDays(cld[sD].lYear,cld[sD].lMonth)==29?'小':'大')+'</b>';
+			}
+			else{
 		    		lObj.innerHTML = cDay(cld[sD].lDay);
-	       
+	    }
 			s=cld[sD].lunarFestival;
 			if(s.length>0) {
 				//农历节日名称大于7个字截去
@@ -414,7 +412,7 @@ function drawCld(SY,SM) {
 			else {
 				s=cld[sD].solarFestival;
 				if(s.length>0) {
-					//阳历节日名称截去		
+					//阳历节日名称截去
 					size = (s.charCodeAt(0)>0 && s.charCodeAt(0)<128)?9:5;
 			 		if(s.length>size+1) s = s.substr(0, size-1)+'…';					//公历节日颜色
 					s = s.fontcolor('#1874cd');
@@ -425,7 +423,7 @@ function drawCld(SY,SM) {
 				}
 			}
 			if(s.length>0) lObj.innerHTML = s;
-	  
+
 		}
 		else {
 			sObj.innerHTML = ' ';
@@ -438,7 +436,7 @@ function changeCld() {
 	var y,m;
 	y = document.getElementById("set_year").selectedIndex + 1900;
 	m = document.getElementById("set_month").selectedIndex;
-     	drawCld(y,m);
+  drawCld(y,m);
 }
 
 //界面初始化
@@ -459,16 +457,16 @@ function pushBtm(key) {
 			       	document.getElementById("set_year").selectedIndex--;
 			break;
 		case 'YD' :
-			if(document.getElementById("set_year").selectedIndex < 149) 
+			if(document.getElementById("set_year").selectedIndex < 149)
 				document.getElementById("set_year").selectedIndex++;
 	       		break;
 		case 'MU' :
-			if(document.getElementById("set_month").selectedIndex > 0) {      
+			if(document.getElementById("set_month").selectedIndex > 0) {
 				document.getElementById("set_month").selectedIndex--;
 			}
 			else {
 				document.getElementById("set_month").selectedIndex = 11;
-				if(document.getElementById("set_year").selectedIndex > 0) 
+				if(document.getElementById("set_year").selectedIndex > 0)
 					document.getElementById("set_year").selectedIndex--;
 			}
 			break;
@@ -478,7 +476,7 @@ function pushBtm(key) {
 			}
 			else {
 				document.getElementById("set_month").selectedIndex = 0;
-				if(document.getElementById("set_year").selectedIndex < 149) 
+				if(document.getElementById("set_year").selectedIndex < 149)
 					document.getElementById("set_year").selectedIndex++;
 			}
 			break;
@@ -496,11 +494,11 @@ function mOvr(v) {
 
 	var sObj = document.getElementById('sd'+ v);
 	var d = sObj.innerHTML - 1;
-     
+
 	if( sObj.innerHTML != '' ) {
 		sObj.style.cursor = 'move';
-		if(cld[d].solarTerms == '' 
-				&& cld[d].solarFestival == '' 
+		if(cld[d].solarTerms == ''
+				&& cld[d].solarFestival == ''
 				&& cld[d].lunarFestival == '')
 		{
 			festival.innerHTML = "";
@@ -508,7 +506,7 @@ function mOvr(v) {
 		}
 		else
 		{
-			
+
 			festival.innerHTML = cld[d].solarTerms + ' ' + cld[d].solarFestival + ' ' + cld[d].lunarFestival;
 			festival.style.display = "block";
 		}
@@ -538,9 +536,9 @@ function mEvn(e) {
 		x = event.x ;
 		y = event.y ;
 		if (document.body.scrollLeft){
-			x += document.body.scrollLeft; 
+			x += document.body.scrollLeft;
 			y += document.body.scrollTop;
-		} 
+		}
       		dStyle.left = (x + offsetx-(width/2)) + "px";
       		dStyle.top = (y + offsety) + "px";
 	}
@@ -564,8 +562,8 @@ function showText(v){
 	+ cld[d].cMonth+ '月 ' + cld[d].cDay + '日</span>';
 
 	if( sObj.innerHTML != '' ) {
-		if(cld[d].solarTerms == '' 
-				&& cld[d].solarFestival == '' 
+		if(cld[d].solarTerms == ''
+				&& cld[d].solarFestival == ''
 				&& cld[d].lunarFestival == '')
 		{
 			holiday.innerHTML = "";
@@ -573,7 +571,7 @@ function showText(v){
 		}
 		else
 		{
-	
+
 			holiday.innerHTML = cld[d].solarTerms + ' ' + cld[d].solarFestival + ' ' + cld[d].lunarFestival;
 			holiday.style.display = "block";
 		}
