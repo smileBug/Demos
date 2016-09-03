@@ -287,7 +287,7 @@ a:focus {
 
 /*提示框*/
 .hint {
-    
+
     display: none;
 
     position: fixed;
@@ -318,7 +318,7 @@ a:focus {
     -o-transform:      translateY(400px);
     transform:         translateY(400px);
 
-    
+
     -webkit-transition: opacity 1s, -webkit-transform 0.5s 1s;
     -moz-transition:    opacity 1s,    -moz-transform 0.5s 1s;
     -ms-transition:     opacity 1s,     -ms-transform 0.5s 1s;
@@ -347,7 +347,7 @@ a:focus {
     -o-transform:      translateY(0px);
     transform:         translateY(0px);
 
-    
+
     -webkit-transition: opacity 1s 5s, -webkit-transform 0.5s 4.5s;
     -moz-transition:    opacity 1s 5s,    -moz-transform 0.5s 4.5s;
     -ms-transition:     opacity 1s 5s,     -ms-transform 0.5s 4.5s;
@@ -384,7 +384,7 @@ a:focus {
     -webkit-border-radius: 30px;
     -moz-border-radius: 30px;
     border-radius: 30px;
- 
+
 }
 
 .button:hover{
