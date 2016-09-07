@@ -5,4 +5,4 @@
 ### [基于原生js制作的万年历](http://smilebug.me/demos/calendar/index.html)
 ### [基于impress.js实现的个人简历](http://smilebug.me/demos/resume/index.html)
 ### [三种下拉菜单](http://smilebug.me/demos/menu/index.html)
-### [原生js实现轮播图](http://smilebug.me/demos/acrousel/index.html)
+### [原生js实现轮播图](http://smilebug.me/demos/carousel/index.html)
