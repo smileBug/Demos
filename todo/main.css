@@ -1,0 +1,43 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+#example{
+  display: -webkit-flex;
+  -webkit-justify-content: center;
+  margin: 20px auto;
+}
+.todo_title{
+  font-size: 40px;
+  text-align: center;
+}
+.todo_new{
+  width: 400px;
+  height: 40px;
+  font-size: 36px;
+}
+.todo_list{
+  list-style: none;
+  font-size: 30px;
+}
+.todo_item{
+  height: 40px;
+  position: relative;
+  margin-top: 5px;
+  background-color: #eee;
+  border-radius: 10px;
+
+}
+.complete{
+  margin:0 10px;
+  vertical-align: middle;
+}
+.todo-delete{
+  position: absolute;
+  right: 0;
+  font-size: 30px;
+  border-radius: 5px;
+}
+.hasDone{
+  text-decoration: line-through;
+}
